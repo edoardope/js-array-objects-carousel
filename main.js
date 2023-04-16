@@ -22,52 +22,60 @@ const images = [
     }
 ];
 
-let currentItem = 0; 
-const itemElement = document.querySelector('.item'); 
 
+let currentItem = 0;
+let currentTitle = 0;
+let currentText = 0;
+const itemElement = document.querySelector('.item');
+const titleElement = document.querySelector('#title');
+const textElement = document.querySelector('.description');
 
 itemElement.innerHTML = `<img src="${images[currentItem].image}" alt="">`;
+titleElement.innerHTML = `${images[currentTitle].title}`;
+textElement.innerHTML = `${images[currentText].text}`;
 
 const prev = document.querySelector('.prev');
 const next = document.querySelector('.next');
 
 prev.addEventListener('click', function() {
-  
   currentItem = (currentItem - 1 + images.length) % images.length;
-  
+  currentTitle = (currentTitle - 1 + images.length) % images.length;
+  currentText = (currentText - 1 + images.length) % images.length;
   itemElement.innerHTML = `<img src="${images[currentItem].image}" alt="">`;
+  titleElement.innerHTML = `${images[currentTitle].title}`;
+  textElement.innerHTML = `${images[currentText].text}`;
+
+  let activeItems = document.querySelector('.items.selected');
+  let itemsToActive = activeItems.previousElementSibling;
+  
+  if ( activeItems.classList.contains('first') ) {
+    itemsToActive = document.querySelector('.items.last');
+  }
+  
+  activeItems.classList.remove('selected');
+  itemsToActive.classList.add('selected');
+  
 });
 
 next.addEventListener('click', function() {
-  
   currentItem = (currentItem + 1) % images.length;
-  
+  currentTitle = (currentTitle + 1) % images.length;
+  currentText = (currentText + 1) % images.length;
   itemElement.innerHTML = `<img src="${images[currentItem].image}" alt="">`;
+  titleElement.innerHTML = `${images[currentTitle].title}`;
+  textElement.innerHTML = `${images[currentText].text}`;
+
+  let activeItems = document.querySelector('.items.selected');
+  let itemsToActive = activeItems.nextElementSibling;
+  
+  if ( activeItems.classList.contains('last') ) {
+    itemsToActive = document.querySelector('.items.first');
+  }
+  
+  activeItems.classList.remove('selected');
+  itemsToActive.classList.add('selected');
+  
 });
 
-prev.addEventListener('click', function() {
-    let activeItems = document.querySelector('.items.selected');
-    let itemsToActive = activeItems.previousElementSibling;
-  
-    if ( activeItems.classList.contains('first') ) {
-      itemsToActive = document.querySelector('.items.last');
-    }
-  
-    activeItems.classList.remove('selected');
-    itemsToActive.classList.add('selected');
 
-});
-
-next.addEventListener('click', function() {
-    let activeItems = document.querySelector('.items.selected');
-    let itemsToActive = activeItems.nextElementSibling;
-  
-    if ( activeItems.classList.contains('last') ) {
-      itemsToActive = document.querySelector('.items.first');
-    }
-  
-    activeItems.classList.remove('selected');
-    itemsToActive.classList.add('selected');
-    
-});
 
